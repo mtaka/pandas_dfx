@@ -27,3 +27,23 @@ def test_from_text(text1):
 def test_df_1(df1):
     assert len(df1), 8
     assert list(df1.columns), 'cls gen math eng jap'.split()
+
+def test_dfs_cols(df1):
+    df11 = dfs_cols(df1, 'gen eng jap')
+    assert list(df11.columns), 'gen eng jap'.split()
+    df12 = dfs_cols(df1, 'cls;jap;math', sep=';')
+    assert list(df12.columns), 'cls jap math'.split()
+    df13 = df1.s_cols('cls gen jap')
+    assert list(df13.columns), 'cls gen jap'.split()
+
+def test_dfm_colsas(df1):
+    df11 = dfm_colsas(df1, {'cls': 'CLS', 'eng': 'E', 'math': 'M', 'jap': 'J'})
+    assert list(df11.columns), 'CLS gen E M J'.split()
+    df12 = df1.m_colsas({'jap': 'JAP', 'gen': 'Gen'})
+    assert list(df11.columns), 'cls Gen eng math JAP'.split()
+
+def test_dfs_colsas(df1):
+    df11 = dfs_colsas(df1, 'C G M E J')
+    assert list(df11.columns), 'C G M E J'.split()
+    df12 = df1.s_colsas('C;G;M;E;J', sep=';')
+    assert list(df12.columns), 'C G M E J'.split()
