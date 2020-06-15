@@ -2,8 +2,9 @@ import pytest
 from pkg import *
 import sys
 
-def test_df():
-    str = """cls,gen,math,eng,jap
+@pytest.fixture
+def text1():
+    return """cls,gen,math,eng,jap
     A,F,40,60,70
     A,F,50,70,60
     A,M,60,80,50
@@ -14,7 +15,9 @@ def test_df():
     B,M,95,60,50
     """
 
-    df = df_from_text(str,sep=',')
+def test_df(text1):
+
+    df = df_from_text(text1, sep=',')
     assert type(df), "DataFrame"
     assert len(df), 8
     assert list(df.columns), 'cls gen math eng jap'.split()
