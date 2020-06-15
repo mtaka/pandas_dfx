@@ -60,3 +60,41 @@ def dfs_colsas(df, scols, sep=' '):
     return df
 
 DataFrame.s_colsas = dfs_colsas
+
+
+#----------------------------------------------------------------------------
+def dfs_gb(df, scols, sep=' '):
+    """DataFrameを指定した文字列でグループ化。区切り文字の既定値は空白
+
+    Args:
+        df (DataFrame): グループ化する対象
+        scols (str): グループ化する列名を文字列でして
+        sep (str, optional): 区切り文字. Defaults to ' '.
+
+    Returns:
+        Groupby: グループ化オブジェクト
+    """
+    return df.groupby(scols.split())
+DataFrame.s_gb = dfs_gb
+
+
+#----------------------------------------------------------------------------
+def dfs_gagg(df, gstr, vstr, f='sum'):
+    """グループ化する項目と、集計項目を文字列で渡すグループ化関数
+
+    Args:
+        df (DataFrame): 対象DataFrame
+        gstr (str): グループ化する項目のリストを文字列で指定
+        vstr (str): 集計項目のリストを文字列で指定
+        f (function/str, optional): グループ化集計関数名. Defaults to 'sum'.
+
+    Returns:
+        DataFrame: 集計結果
+    """
+    #return df.groupby(gstr.split())[vstr.split()].agg(f)
+    return df.s_gb(gstr)[vstr.split()].agg(f)
+DataFrame.s_gagg = dfs_gagg
+
+# def dfs_gapp(df, gstr, vstr, fapp):
+#     return df.groupby(gstr.split())[vstr.split()].app(fapp)
+# DataFrame.x_sgapp = dfs_gapp
